@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A private, local-first legal case brief builder.">
+  <title>Legal Brief Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <script src="https://unpkg.com/docx@8.5.0/build/index.umd.js" defer></script>
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="#top" aria-label="Legal Brief Builder home">
+      <span class="brand-mark" aria-hidden="true">§</span>
+      <span><strong>Legal Brief</strong><small>BUILDER</small></span>
+    </a>
+    <div class="header-actions">
+      <span id="save-status" class="save-status" role="status">Starting…</span>
+      <button class="button button-quiet" data-action="open-drafts">My Drafts</button>
+      <button class="button button-dark" data-action="new-brief">New brief <span aria-hidden="true">＋</span></button>
+      <button class="icon-button" data-action="open-settings" aria-label="Open settings" title="Settings and about">⋯</button>
+    </div>
+  </header>
+
+  <main id="top" class="workspace">
+    <aside class="sidebar" aria-label="Brief navigation">
+      <div class="sidebar-heading"><span>On this brief</span><span class="section-count" id="section-count">10</span></div>
+      <nav id="section-nav"></nav>
+      <div class="privacy-note"><span class="lock-icon" aria-hidden="true">⌑</span><div><strong>Private by design</strong><p>Your work stays in this browser until you export it.</p></div></div>
+    </aside>
+
+    <section class="editor-column" aria-label="Brief editor">
+      <div class="brief-intro">
+        <div>
+          <p class="eyebrow">CASE BRIEF <span id="brief-id-label"></span></p>
+          <input id="brief-title" class="title-input" value="Untitled brief" aria-label="Brief title">
+          <p class="intro-copy">Build a clear record of the case. Use the prompts as a quiet guide, then make the analysis your own.</p>
+        </div>
+        <div class="intro-tools">
+          <button class="button button-outline" data-action="import">Import <span aria-hidden="true">↥</span></button>
+          <button class="button button-outline" data-action="export-draft">Export draft <span aria-hidden="true">↧</span></button>
+          <button class="button button-outline" data-action="export-pdf">PDF</button>
+          <button class="button button-outline" data-action="export-docx">DOCX</button>
+          <input id="import-file" type="file" accept=".brief,application/json" hidden>
+        </div>
+      </div>
+      <div id="editor" class="brief-sections"></div>
+      <footer class="editor-footer"><span>Legal Brief Builder <span id="footer-version"></span></span><span>Local document · No account required</span></footer>
+    </section>
+  </main>
+
+  <div id="toast-region" class="toast-region" aria-live="polite"></div>
+
+  <dialog id="drafts-dialog" class="modal">
+    <div class="modal-header"><div><p class="eyebrow">WORKSPACE</p><h2>My drafts</h2></div><button class="close-button" data-action="close-modal" aria-label="Close">×</button></div>
+    <div id="draft-list" class="draft-list"></div>
+    <div class="modal-footer"><button class="button button-dark" data-action="new-brief">New brief <span aria-hidden="true">＋</span></button></div>
+  </dialog>
+
+  <dialog id="settings-dialog" class="modal modal-small">
+    <div class="modal-header"><div><p class="eyebrow">ABOUT</p><h2>Document details</h2></div><button class="close-button" data-action="close-modal" aria-label="Close">×</button></div>
+    <div id="document-details" class="details-list"></div>
+    <div class="about-copy"><strong>Provenance is supporting evidence, not proof of authorship.</strong><p>Metadata can be removed, altered, or lost during conversion. This application never sends your brief or device information to a server.</p></div>
+  </dialog>
+
+  <dialog id="help-dialog" class="modal modal-help">
+    <div class="modal-header"><div><p class="eyebrow" id="help-kicker">GUIDANCE</p><h2 id="help-title"></h2></div><button class="close-button" data-action="close-modal" aria-label="Close">×</button></div>
+    <div id="help-content" class="modal-content"></div>
+  </dialog>
+
+  <dialog id="example-dialog" class="modal modal-help">
+    <div class="modal-header"><div><p class="eyebrow">EXAMPLE <span id="example-position"></span></p><h2 id="example-title"></h2></div><button class="close-button" data-action="close-modal" aria-label="Close">×</button></div>
+    <p id="example-source" class="example-source"></p><div id="example-content" class="example-body"></div>
+    <div class="modal-footer modal-nav"><button class="button button-outline" data-action="previous-example">← Previous</button><button class="button button-dark" data-action="next-example">Next →</button></div>
+  </dialog>
+
+  <script nomodule>document.body.innerHTML = '<main class="unsupported"><h1>Modern browser required</h1><p>Please open Legal Brief Builder in a current version of Chrome, Edge, Firefox, or Safari.</p></main>';</script>
+</body>
+</html>
